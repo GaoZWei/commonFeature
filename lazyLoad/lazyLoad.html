@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片懒加载</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        img {
+            width: 100%;
+            height: 183px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/loading.gif" alt=""
+            data-src="https://gitee.com/z1725163126/cloundImg/raw/master/1.jpg" class="lazyload" />
+    </div>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/loading.gif" alt=""
+            data-src="https://gitee.com/z1725163126/cloundImg/raw/master/2.jpg" class="lazyload" />
+    </div>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/loading.gif" alt=""
+            data-src="https://gitee.com/z1725163126/cloundImg/raw/master/3.jpg" class="lazyload" />
+    </div>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/loading.gif" alt=""
+            data-src="https://gitee.com/z1725163126/cloundImg/raw/master/4.jpg" class="lazyload" />
+    </div>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/loading.gif" alt=""
+            data-src="https://gitee.com/z1725163126/cloundImg/raw/master/5.jpg" class="lazyload" />
+    </div>
+
+    <script>
+        // 图片要设置高度
+        //获取元素
+        var imgs = [...document.querySelectorAll('img')]
+        var HTML = document.documentElement
+        lazyload()
+        window.addEventListener('scroll', throttle(lazyload, 20), false)
+
+        function lazyload() {
+            for (let i = 0; i < imgs.length; i++) {
+                var curImg = imgs[i]
+                if (isVisible(curImg)) {
+                    curImg.src = curImg.dataset.src;
+                    imgs.splice(i, 1)
+                    i--
+                }
+            }
+        }
+        //判断是否在可视区域
+        function isVisible(target) {
+            var position = target.getBoundingClientRect()
+            if (position.top >= 0 && position.bottom <= HTML.clientHeight) {
+                return true
+            }
+        }
+        //节流
+        function throttle(fn, time) {
+            var pre = 0
+            return function (...args) {
+                var now = Date.now()
+                if (now - pre >= time) {
+                    pre = now
+                    fn.apply(this, args)
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
