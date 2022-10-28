@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片预加载</title>
+    <style>
+        .img-container {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        img {
+            width: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img-container">
+        <img src="https://gitee.com/z1725163126/cloundImg/raw/master/1.jpg" alt="图片" id="img" />
+    </div>
+
+    <script>
+        const imgs = [
+            "https://gitee.com/z1725163126/cloundImg/raw/master/2.jpg",
+            "https://gitee.com/z1725163126/cloundImg/raw/master/3.jpg",
+            "https://gitee.com/z1725163126/cloundImg/raw/master/4.jpg",
+            "https://gitee.com/z1725163126/cloundImg/raw/master/5.jpg",
+        ];
+        var $img = document.getElementById('img')
+        var i = 0
+
+        //点击时候的预加载
+        $img.addEventListener('click', () => {
+            if (i < imgs.length) {
+                $img.src = imgs[i]
+                i++
+                if (i < imgs.length) {
+                    preload(imgs[i]).then((data) => {
+                        console.log(data)
+                    })
+                }
+            } else {
+                console.log('最后一张')
+            }
+        }, false)
+        
+        //页面开始的预加载
+        preload(imgs[0]).then((data) => {
+            console.log(data)
+        }).catch(() => {
+            console.log('fault')
+        })
+
+        function preload(src) {
+            return new Promise((resolve, reject) => {
+                var img = document.createElement('img')
+                img.src = src
+                img.addEventListener('load', () => resolve(img))
+                img.addEventListener('error', () => reject())
+            })
+        }
+    </script>
+</body>
+
+</html>

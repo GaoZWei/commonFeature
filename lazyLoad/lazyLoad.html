@@ -42,7 +42,7 @@
 
     <script>
         // 图片要设置高度
-        //获取元素
+        //1.获取元素
         var imgs = [...document.querySelectorAll('img')]
         var HTML = document.documentElement
         lazyload()
@@ -51,14 +51,14 @@
         function lazyload() {
             for (let i = 0; i < imgs.length; i++) {
                 var curImg = imgs[i]
-                if (isVisible(curImg)) {
-                    curImg.src = curImg.dataset.src;
+                if (isVisible(curImg)) { //判断是否在可视区域,在则显示
+                    curImg.src = curImg.dataset.src; //核心
                     imgs.splice(i, 1)
                     i--
                 }
             }
         }
-        //判断是否在可视区域
+        //2.判断是否在可视区域
         function isVisible(target) {
             var position = target.getBoundingClientRect()
             if (position.top >= 0 && position.bottom <= HTML.clientHeight) {
