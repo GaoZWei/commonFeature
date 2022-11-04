@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #left,
+        #right {
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+
+        #middle {
+            height: 200px;
+            background: green;
+        }
+
+        /* 三列的设置 */
+        #left {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #right {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        #middle {
+            margin: 0 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 相关网站:https://juejin.cn/post/6844903827603193863 -->
+    <div id="left">left</div>
+    <div id="middle">middle</div>
+    <div id="right">right</div>
+</body>
+
+</html>
