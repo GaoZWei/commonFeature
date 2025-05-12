@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+
+<body>
+    防抖: <input type="text" id='app' />
+    <script>
+        // 初始版本
+        const input = document.getElementById('app')
+        // input.oninput = function () {
+        //     console.log(this.value);
+        // }
+        //优化版本 
+        // 有定时器就清空,没定时器就设置定时器
+        // let time = null
+        // input.oninput = function () {
+        //     if (time != null) {
+        //         clearTimeout(time)
+        //     }
+        //     time = setTimeout(() => {
+        //         console.log(this.value);
+        //     }, 1000)
+        // }
+        //闭包优化版本 
+        input.oninput = debounce(function () {
+            console.log(this.value);
+        }, 1000)
+
+        function debounce(fn, delay) {
+            let time = null
+            return function () {
+                if (time != null) {
+                    clearTimeout(time)
+                }
+                time = setTimeout(() => {
+                    fn.apply(this)
+                }, delay)
+            }
+        }
+    </script>
+</body>
+
+</html>
