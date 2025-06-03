@@ -16,3 +16,4 @@ vue2-dynamic-routing-master :动态路由
 Knowledge 基础的小知识点  
 
 componentsBase/myComponents  基础组件库的搭建流程 相关视频: https://www.bilibili.com/video/BV1de411X73e?spm_id_from=333.788.videopod.sections&vd_source=87cec1c19ad46d006e64c899fbaae750  
+qms-demo 质检代码: 包含表格分页高亮功能
