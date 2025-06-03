@@ -56,23 +56,40 @@
                 <el-radio :value="false">否</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="问题备注">
-              <el-input
-                type="textarea"
-                v-model="form.remark"
+            <el-table
+              ref="tableRef"
+              :data="list"
+              height="100%"
+              border
+              style="width: 80%"
+            >
+              <el-table-column
+                prop="id"
+                label="点位"
               />
-            </el-form-item>
+              <el-table-column
+                prop="problemType"
+                label="问题类型"
+              />
+              <el-table-column
+                prop="other"
+                label="备注"
+              />
+            </el-table>
+
           </el-form>
-          <el-button
-            type="default"
-            @click="handlePrev"
-            v-if="showPrevButton"
-          >上一景</el-button>
-          <el-button
-            type="primary"
-            @click="handleNext"
-            v-if="showNextButton"
-          >下一景</el-button>
+          <div class="check-form-operation">
+            <el-button
+              type="default"
+              @click="handlePrev"
+              v-if="showPrevButton"
+            >上一景</el-button>
+            <el-button
+              type="primary"
+              @click="handleNext"
+              v-if="showNextButton"
+            >下一景</el-button>
+          </div>
         </div>
       </div>
 
@@ -87,7 +104,7 @@
         <div class="quality-progress">
           质检进度:100/200
         </div>
-        <div class="pass-num">合格 185 景</div>
+        <div class="pass-num">合格 <span class="pass-num-item">185</span> 景</div>
         <div class="submit-area"> <el-button type="primary">提交</el-button> </div>
       </div>
       <ImageTable
@@ -177,6 +194,14 @@ const currentImage = ref(null);
 const form = ref({ hasProblem: false, remark: "" });
 const uncheckedPage = ref(1);
 const checkedPage = ref(1);
+
+// 影像质检信息
+const tableRef = ref(null);
+const list = ref([
+  { id: 1, problemType: "问题类型1", other: "other" },
+  { id: 2, problemType: "问题类型2", other: "other2" },
+  { id: 3, problemType: "问题类型3", other: "other3" },
+]);
 
 const pagedUnchecked = computed(() => {
   const start = (uncheckedPage.value - 1) * uncheckedPageSize.value;
@@ -342,8 +367,6 @@ onMounted(async () => {
 
   .main-panel {
     width: 70%;
-    // flex: 4;
-    // padding-left: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -428,11 +451,12 @@ onMounted(async () => {
         padding: 10px;
         border: 1px solid #ccc;
         border-bottom: none;
-        .card-header{
+        .card-header {
           font-size: 18px;
         }
         .image-info-message {
           margin-left: 1%;
+          margin-top: 2%;
           .image-info-message-label {
             font-weight: bold;
             font-size: 16px;
@@ -445,13 +469,27 @@ onMounted(async () => {
         padding: 10px;
         border: 1px solid #ccc;
         border-left: none;
-
+        border-bottom: none;
+        .card-header {
+          font-size: 18px;
+        }
+        .el-form {
+          margin-left: 1%;
+          margin-bottom: 10px;
+        }
         .el-form-item {
           margin-bottom: 16px;
+          :deep(.el-form-item__label) {
+            font-size: 16px;
+            font-weight: bold;
+          }
         }
-
-        .el-button {
-          margin-right: 8px;
+        .check-form-operation {
+          float: right;
+          margin: 1% auto;
+          .el-button {
+            margin-right: 8px;
+          }
         }
       }
     }
@@ -467,7 +505,6 @@ onMounted(async () => {
   }
 
   .sidebar {
-    border: 2px dashed red;
     // min-width: 0;
     // overflow: hidden;
     // flex: 1;
@@ -483,6 +520,10 @@ onMounted(async () => {
       }
       .pass-num {
         flex: 1;
+        .pass-num-item {
+          font-weight: bold;
+          color: greenyellow;
+        }
       }
       .submit-quality-result {
         flex: 1;
